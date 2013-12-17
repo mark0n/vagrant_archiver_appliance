@@ -1,19 +1,9 @@
+import 'classes/*.pp'
+
 include apt
-
-# for some reason we need to run apt-get update before we can start. This
-# seems to be needed only for provisioning of VMs with Vagrant.
-exec { "apt-update":
-  command => "/usr/bin/apt-get update"
-}
-Exec["apt-update"] -> Package <| |>
-
-apt::source { 'nsclmirror':
-  location	=> 'http://nsclmirror.nscl.msu.edu/debian/',
-  release	=> 'wheezy',
-  repos		=> 'main contrib non-free',
-  include_src	=> false,
-}
-Apt::Source['nsclmirror'] -> Package <| |>
+include vagrant
+#include use_local_deb_mirror
+#include use_nscl_deb_mirror
 
 apt::source { 'nsls2repo':
   location    => 'http://epics.nsls2.bnl.gov/debian/',
