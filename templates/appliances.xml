@@ -1,6 +1,7 @@
 <appliances>
+<% @nodes_fqdn.each_with_index do |fqdn, index| -%>
   <appliance>
-    <identity>appliance0</identity>
+    <identity>appliance<%= index %></identity>
     <cluster_inetport><%= fqdn %>:16670</cluster_inetport>
     <mgmt_url>http://<%= fqdn %>:17665/mgmt/bpl</mgmt_url>
     <engine_url>http://<%= fqdn %>:17666/engine/bpl</engine_url>
@@ -8,4 +9,5 @@
     <retrieval_url>http://<%= fqdn %>:17668/retrieval/bpl</retrieval_url>
     <data_retrieval_url>http://<%= fqdn %>:17668/retrieval</data_retrieval_url>
   </appliance>
+<% end -%>
 </appliances>

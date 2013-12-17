@@ -5,4 +5,9 @@ class vagrant {
     command => "/usr/bin/apt-get update"
   }
   Exec["apt-update"] -> Package <| |>
+
+  file { '/etc/hosts':
+    ensure	=> file,
+    content	=> template('/vagrant/templates/hosts'),
+  }
 }

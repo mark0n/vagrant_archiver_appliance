@@ -28,8 +28,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
-  config.vm.network :public_network, :mac => "0800273ea3fb"
-  config.vm.hostname = "archappl0.example.com"
+  config.vm.define "archappl0" do |archappl0|
+    archappl0.vm.network :public_network, :mac => "0800273ea3fb"
+    archappl0.vm.hostname = "archappl0.example.com"
+  end
+  config.vm.define "archappl1" do |archappl1|
+    archappl1.vm.network :public_network, :mac => "0800273ea3fc"
+    archappl1.vm.hostname = "archappl1.example.com"
+  end
+#  config.vm.define "archappl2" do |archappl2|
+#    archappl2.vm.network :public_network, :mac => "0800273ea3fd"
+#    archappl2.vm.hostname = "archappl2.example.com"
+#  end
 
   # If true, then any SSH connections made will enable agent forwarding.
   # Default value: false

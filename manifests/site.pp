@@ -1,33 +1,34 @@
 import 'classes/*.pp'
 
-node 'archappl0.example.com' {
-  include apt
+#include use_local_deb_mirror
+#include use_nscl_deb_mirror
+
+$archiver_nodes = [
+  'archappl0.example.com',
+  'archappl1.example.com',
+  'archappl2.example.com',
+]
+
+node "archappl0.example.com" {
   include vagrant
-  #include use_local_deb_mirror
-  #include use_nscl_deb_mirror
-  include archiver_appliance
-
-  apt::source { 'nsls2repo':
-    location    => 'http://epics.nsls2.bnl.gov/debian/',
-    release     => 'wheezy',
-    repos       => 'main contrib',
-    include_src => false,
-    key         => '256355f9',
-    key_source  => 'http://epics.nsls2.bnl.gov/debian/repo-key.pub',
+  class { 'archiver_node':
+    nodes_fqdn	=> $archiver_nodes,
   }
+  Class['vagrant'] -> Class['archiver_node']
+}
 
-  # Packages in controls repo are not signed, yet! Thus we use NSLS-II repo for now.
-  #apt::source { 'controlsrepo':
-  #  location    => 'http://apt.hcl.nscl.msu.edu/controls/',
-  #  release     => 'wheezy',
-  #  repos       => 'main',
-  #  include_src => false,
-  #  key         => '256355f9',
-  #  key_source  => 'http://epics.nsls2.bnl.gov/debian/repo-key.pub',
-  #}
-
-  package { 'epics-catools':
-    ensure	=> installed,
-    require	=> Apt::Source['nsls2repo'],
+node "archappl1.example.com" {
+  include vagrant
+  class { 'archiver_node':
+    nodes_fqdn	=> $archiver_nodes,
   }
+  Class['vagrant'] -> Class['archiver_node']
+}
+
+node "archappl2.example.com" {
+  include vagrant
+  class { 'archiver_node':
+    nodes_fqdn	=> $archiver_nodes,
+  }
+  Class['vagrant'] -> Class['archiver_node']
 }
