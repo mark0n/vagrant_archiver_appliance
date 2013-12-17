@@ -133,7 +133,7 @@ file { '/usr/share/tomcat7/lib/mysql-connector-java-5.1.27-bin.jar':
 }
 
 exec { 'install Tomcat JDBC Connection Pool':
-  command	=> '/usr/bin/unzip /vagrant/files/apache-tomcat-jdbc-1.1.0.1-bin.zip -d /usr/share/tomcat7/lib/',
+  command	=> '/bin/tar -xzf /vagrant/files/apache-tomcat-jdbc-1.1.0.1-bin.tar.gz -C /usr/share/tomcat7/lib/',
   creates	=> '/usr/share/tomcat7/lib/tomcat-jdbc.jar',
   require	=> Package['tomcat7'],
 }
