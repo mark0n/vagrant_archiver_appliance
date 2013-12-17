@@ -168,25 +168,25 @@ class archiver_appliance($nodes_fqdn = undef) {
 
   file { '/etc/default/archappl-engine':
     ensure	=> file,
-    source	=> '/vagrant/files/init.d/archappl-engine',
+    content	=> template('/vagrant/templates/default/archappl-engine'),
     notify	=> Service['archappl-engine'],
   }
 
   file { '/etc/default/archappl-etl':
     ensure	=> file,
-    source	=> '/vagrant/files/default/archappl-etl',
+    content	=> template('/vagrant/templates/default/archappl-etl'),
     notify	=> Service['archappl-etl'],
   }
 
   file { '/etc/default/archappl-mgmt':
     ensure	=> file,
-    source	=> '/vagrant/files/default/archappl-mgmt',
+    content	=> template('/vagrant/templates/default/archappl-mgmt'),
     notify	=> Service['archappl-mgmt'],
   }
 
   file { '/etc/default/archappl-retrieval':
     ensure	=> file,
-    source	=> '/vagrant/files/default/archappl-retrieval',
+    content	=> template('/vagrant/templates/default/archappl-retrieval'),
     notify	=> Service['archappl-retrieval'],
   }
 
