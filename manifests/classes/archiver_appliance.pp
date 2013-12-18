@@ -215,7 +215,7 @@ class archiver_appliance($nodes_fqdn = undef) {
   }
 
   service { 'archappl-mgmt':
-    ensure	=> stopped,
+    ensure	=> running,
     enable	=> true,
     hasrestart	=> true,
     hasstatus	=> true,
@@ -281,7 +281,7 @@ class archiver_appliance($nodes_fqdn = undef) {
   }
 
   service { 'archappl-engine':
-    ensure	=> stopped,
+    ensure	=> running,
     enable	=> true,
     hasrestart	=> true,
     hasstatus	=> true,
