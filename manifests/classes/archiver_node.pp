@@ -26,4 +26,13 @@ class archiver_node($nodes_fqdn = undef) {
     ensure	=> installed,
     require	=> Apt::Source['nsls2repo'],
   }
+
+  # Archiver appliance uses its own tomcat containers so we do not need the default one.
+  service { 'tomcat7':
+    ensure	=> stopped,
+    enable	=> false,
+    hasrestart	=> true,
+    hasstatus	=> true,
+    require	=> Package['tomcat7'],
+  }
 }
