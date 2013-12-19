@@ -31,10 +31,6 @@ class archiver_appliance($nodes_fqdn = undef) {
     require	=> Mysql::Db['archappl'],
   }
 
-  package { 'jsvc':
-    ensure	=> installed,
-  }
-
   package { 'libmysql-java':
     ensure	=> installed,
   }
