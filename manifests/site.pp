@@ -14,26 +14,26 @@ $iocbase = '/usr/local/lib/iocapps'
 
 node "archappl0.example.com" {
   include vagrant
-  class { 'archiver_node':
+  class { 'archiver_appliance::node':
     nodes_fqdn	=> $archiver_nodes,
   }
-  Class['vagrant'] -> Class['archiver_node']
+  Class['vagrant'] -> Class['archiver_appliance::node']
 }
 
 node "archappl1.example.com" {
   include vagrant
-  class { 'archiver_node':
+  class { 'archiver_appliance::node':
     nodes_fqdn	=> $archiver_nodes,
   }
-  Class['vagrant'] -> Class['archiver_node']
+  Class['vagrant'] -> Class['archiver_appliance::node']
 }
 
 node "archappl2.example.com" {
   include vagrant
-  class { 'archiver_node':
+  class { 'archiver_appliance::node':
     nodes_fqdn	=> $archiver_nodes,
   }
-  Class['vagrant'] -> Class['archiver_node']
+  Class['vagrant'] -> Class['archiver_appliance::node']
 }
 
 node "testioc.example.com" {

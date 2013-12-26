@@ -1,4 +1,7 @@
-class archiver_node($nodes_fqdn = undef) {
+class archiver_appliance::node(
+  $nodes_fqdn = undef
+)
+{
   include apt
   class { 'archiver_appliance':
     nodes_fqdn	=> $archiver_nodes,

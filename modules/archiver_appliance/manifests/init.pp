@@ -10,19 +10,19 @@ class archiver_appliance($nodes_fqdn = undef) {
   }
 
   class { '::mysql::server':
-    package_name		=> 'mysql-server',
+    package_name	=> 'mysql-server',
     package_ensure	=> present,
     service_enabled	=> true,
   }
 
   mysql::db { 'archappl':
-    user		=> 'archappl',
+    user	=> 'archappl',
     password	=> 'archappl',
-    host		=> 'localhost',
+    host	=> 'localhost',
   # UTF8 unfortunately does not work right now since archive appliance uses to long keys, so we have to use the old-fashioned MySQL default :-(
     charset	=> 'latin1',
     collate	=> 'latin1_swedish_ci',
-    grant		=> ['ALL'],
+    grant	=> ['ALL'],
   }
 
   exec { 'create MySQL tables for archiver appliance':
@@ -37,26 +37,32 @@ class archiver_appliance($nodes_fqdn = undef) {
 
   file { '/usr/share/tomcat7/lib/log4j.properties':
     ensure	=> file,
-    source	=> '/vagrant/files/log4j.properties',
+    source	=> 'puppet:///modules/archiver_appliance/log4j.properties',
     require	=> Package['tomcat7'],
   }
 
   file { '/etc/archappl':
     ensure	=> directory,
-    owner		=> root,
-    group		=> root,
-    mode		=> 755,
+    owner	=> root,
+    group	=> root,
+    mode	=> 755,
   }
 
   file { '/etc/archappl/appliances.xml':
     ensure	=> file,
-    content	=> template('/vagrant/templates/appliances.xml'),
+    content	=> template('archiver_appliance/appliances.xml'),
+  }
+
+  file { '/tmp/archappl_v0.0.1_SNAPSHOT_19-November-2013T10-01-18.tar.gz':
+    ensure	=> file,
+    source	=> 'puppet:///modules/archiver_appliance/archappl_v0.0.1_SNAPSHOT_19-November-2013T10-01-18.tar.gz',
   }
 
   exec { 'extract archiver appliance archive':
-    command	=> '/bin/tar -xzf /vagrant/files/archappl_v0.0.1_SNAPSHOT_19-November-2013T10-01-18.tar.gz',
+    command	=> '/bin/tar -xzf /tmp/archappl_v0.0.1_SNAPSHOT_19-November-2013T10-01-18.tar.gz',
     cwd		=> '/tmp/',
     creates	=> '/tmp/engine.war',
+    subscribe	=> File['/tmp/archappl_v0.0.1_SNAPSHOT_19-November-2013T10-01-18.tar.gz'],
   }
 
   exec { 'deploy multiple tomcats':
@@ -78,75 +84,81 @@ class archiver_appliance($nodes_fqdn = undef) {
   file { '/var/lib/tomcat7-archappl':
     ensure	=> directory,
     recurse	=> true,
-    owner		=> tomcat7,
-    group		=> tomcat7,
+    owner	=> tomcat7,
+    group	=> tomcat7,
   }
 
   file { '/usr/share/tomcat7/lib/mysql-connector-java-5.1.27-bin.jar':
     ensure	=> file,
-    source	=> '/vagrant/files/mysql-connector-java-5.1.27-bin.jar',
+    source	=> 'puppet:///modules/archiver_appliance/mysql-connector-java-5.1.27-bin.jar',
     require	=> Package['tomcat7'],
   }
 
+  file { '/tmp/apache-tomcat-jdbc-1.1.0.1-bin.tar.gz':
+    ensure	=> file,
+    source	=> 'puppet:///modules/archiver_appliance/apache-tomcat-jdbc-1.1.0.1-bin.tar.gz',
+  }
+
   exec { 'install Tomcat JDBC Connection Pool':
-    command	=> '/bin/tar -xzf /vagrant/files/apache-tomcat-jdbc-1.1.0.1-bin.tar.gz -C /usr/share/tomcat7/lib/',
+    command	=> '/bin/tar -xzf /tmp/apache-tomcat-jdbc-1.1.0.1-bin.tar.gz -C /usr/share/tomcat7/lib/',
     creates	=> '/usr/share/tomcat7/lib/tomcat-jdbc.jar',
     require	=> Package['tomcat7'],
+    subscribe	=> File['/tmp/apache-tomcat-jdbc-1.1.0.1-bin.tar.gz'],
   }
 
   file { '/var/lib/tomcat7-archappl/engine/webapps/engine.war':
     ensure	=> file,
     source	=> '/tmp/engine.war',
-    owner		=> tomcat7,
+    owner	=> tomcat7,
     require	=> Exec['deploy multiple tomcats'],
   }
 
   file { '/var/lib/tomcat7-archappl/etl/webapps/etl.war':
     ensure	=> file,
     source	=> '/tmp/etl.war',
-    owner		=> tomcat7,
+    owner	=> tomcat7,
     require	=> Exec['deploy multiple tomcats'],
   }
 
   file { '/var/lib/tomcat7-archappl/mgmt/webapps/mgmt.war':
     ensure	=> file,
     source	=> '/tmp/mgmt.war',
-    owner		=> tomcat7,
+    owner	=> tomcat7,
     require	=> Exec['deploy multiple tomcats'],
   }
 
   file { '/var/lib/tomcat7-archappl/retrieval/webapps/retrieval.war':
     ensure	=> file,
     source	=> '/tmp/retrieval.war',
-    owner		=> tomcat7,
+    owner	=> tomcat7,
     require	=> Exec['deploy multiple tomcats'],
   }
 
   file { '/var/lib/tomcat7-archappl/engine/conf/context.xml':
     ensure	=> file,
-    source	=> '/vagrant/files/context.xml',
-    owner		=> tomcat7,
+    source	=> 'puppet:///modules/archiver_appliance/context.xml',
+    owner	=> tomcat7,
     require	=> Exec['deploy multiple tomcats'],
   }
 
   file { '/var/lib/tomcat7-archappl/etl/conf/context.xml':
     ensure	=> file,
-    source	=> '/vagrant/files/context.xml',
-    owner		=> tomcat7,
+    source	=> 'puppet:///modules/archiver_appliance/context.xml',
+    owner	=> tomcat7,
     require	=> Exec['deploy multiple tomcats'],
   }
 
   file { '/var/lib/tomcat7-archappl/mgmt/conf/context.xml':
     ensure	=> file,
-    source	=> '/vagrant/files/context.xml',
-    owner		=> tomcat7,
+    source	=> 'puppet:///modules/archiver_appliance/context.xml',
+    owner	=> tomcat7,
     require	=> Exec['deploy multiple tomcats'],
   }
 
   file { '/var/lib/tomcat7-archappl/retrieval/conf/context.xml':
     ensure	=> file,
-    source	=> '/vagrant/files/context.xml',
-    owner		=> tomcat7,
+    source	=> 'puppet:///modules/archiver_appliance/context.xml',
+    owner	=> tomcat7,
     require	=> Exec['deploy multiple tomcats'],
   }
 
@@ -164,50 +176,50 @@ class archiver_appliance($nodes_fqdn = undef) {
 
   file { '/etc/default/archappl-engine':
     ensure	=> file,
-    content	=> template('/vagrant/templates/default/archappl-engine'),
+    content	=> template('archiver_appliance/default/archappl-engine'),
     notify	=> Service['archappl-engine'],
   }
 
   file { '/etc/default/archappl-etl':
     ensure	=> file,
-    content	=> template('/vagrant/templates/default/archappl-etl'),
+    content	=> template('archiver_appliance/default/archappl-etl'),
     notify	=> Service['archappl-etl'],
   }
 
   file { '/etc/default/archappl-mgmt':
     ensure	=> file,
-    content	=> template('/vagrant/templates/default/archappl-mgmt'),
+    content	=> template('archiver_appliance/default/archappl-mgmt'),
     notify	=> Service['archappl-mgmt'],
   }
 
   file { '/etc/default/archappl-retrieval':
     ensure	=> file,
-    content	=> template('/vagrant/templates/default/archappl-retrieval'),
+    content	=> template('archiver_appliance/default/archappl-retrieval'),
     notify	=> Service['archappl-retrieval'],
   }
 
   file { '/etc/init.d/archappl-engine':
     ensure	=> file,
-    source	=> '/vagrant/files/init.d/archappl-engine',
-    mode		=> 755,
+    source	=> 'puppet:///modules/archiver_appliance/etc/init.d/archappl-engine',
+    mode	=> 755,
   }
 
   file { '/etc/init.d/archappl-etl':
     ensure	=> file,
-    source	=> '/vagrant/files/init.d/archappl-etl',
-    mode		=> 755,
+    source	=> 'puppet:///modules/archiver_appliance/etc/init.d/archappl-etl',
+    mode	=> 755,
   }
 
   file { '/etc/init.d/archappl-mgmt':
     ensure	=> file,
-    source	=> '/vagrant/files/init.d/archappl-mgmt',
-    mode		=> 755,
+    source	=> 'puppet:///modules/archiver_appliance/etc/init.d/archappl-mgmt',
+    mode	=> 755,
   }
 
   file { '/etc/init.d/archappl-retrieval':
     ensure	=> file,
-    source	=> '/vagrant/files/init.d/archappl-retrieval',
-    mode		=> 755,
+    source	=> 'puppet:///modules/archiver_appliance/etc/init.d/archappl-retrieval',
+    mode	=> 755,
   }
 
   service { 'archappl-mgmt':
