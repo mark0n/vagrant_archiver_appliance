@@ -40,6 +40,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 #    archappl2.vm.network :public_network, :mac => "0800273ea3fd"
 #    archappl2.vm.hostname = "archappl2.example.com"
 #  end
+  config.vm.define "testioc" do |testioc|
+    testioc.vm.network :public_network, :mac => "0800273ea3fe"
+    testioc.vm.hostname = "testioc.example.com"
+    testioc.vm.provider :virtualbox do |tvb|
+      tvb.customize ["modifyvm", :id, "--memory", "256"]
+    end
+  end
 
   # If true, then any SSH connections made will enable agent forwarding.
   # Default value: false

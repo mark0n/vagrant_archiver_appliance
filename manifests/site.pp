@@ -2,12 +2,15 @@ import 'classes/*.pp'
 
 #include use_local_deb_mirror
 #include use_nscl_deb_mirror
+include apt
 
 $archiver_nodes = [
   'archappl0.example.com',
   'archappl1.example.com',
   'archappl2.example.com',
 ]
+
+$iocbase = '/usr/local/lib/iocapps'
 
 node "archappl0.example.com" {
   include vagrant
@@ -31,4 +34,129 @@ node "archappl2.example.com" {
     nodes_fqdn	=> $archiver_nodes,
   }
   Class['vagrant'] -> Class['archiver_node']
+}
+
+node "testioc.example.com" {
+  include vagrant
+
+  apt::source { 'nsls2repo':
+    location    => 'http://epics.nsls2.bnl.gov/debian/',
+    release     => 'wheezy',
+    repos       => 'main contrib',
+    include_src => false,
+    key         => '256355f9',
+    key_source  => 'http://epics.nsls2.bnl.gov/debian/repo-key.pub',
+  }
+
+  class { 'epicssoftioc':
+    iocbase	=> $iocbase,
+  }
+
+  file { "$iocbase/control":
+    source	=> '/vagrant/files/pvmanager/pvmanager-integration/epics/control',
+    recurse	=> true,
+    owner	=> 'root',
+    group	=> 'softioc',
+    notify	=> Epicssoftioc::Ioc['control'],
+  }
+
+  file { "$iocbase/control/st.cmd":
+    source	=> '/vagrant/files/pvmanager/pvmanager-integration/epics/control/st.cmd',
+    owner	=> 'root',
+    group	=> 'softioc',
+    mode	=> '0755',
+    notify	=> Epicssoftioc::Ioc['control'],
+  }
+
+  epicssoftioc::ioc { 'control':
+    bootdir	=> '',
+    consolePort	=> '4051',
+    enable	=> true,
+    ensure	=> running,
+    require	=> File["$iocbase/control"],
+  }
+
+  file { '/usr/local/bin':
+    source	=> '/vagrant/files/pvmanager/pvmanager-integration/epics/bin',
+    recurse	=> true,
+    owner	=> 'root',
+    group	=> 'root',
+  }
+
+  file { '/etc/init.d/testcontroller':
+    source	=> '/vagrant/files/init.d/testcontroller',
+    owner	=> 'root',
+    group	=> 'root',
+    mode	=> '0755',
+  }
+
+  service { 'testcontroller':
+    ensure	=> running,
+    enable	=> true,
+  }
+
+  file { "$iocbase/phase1":
+    source	=> '/vagrant/files/pvmanager/pvmanager-integration/epics/phase1',
+    recurse	=> true,
+    owner	=> 'root',
+    group	=> 'softioc',
+    notify	=> Epicssoftioc::Ioc['phase1'],
+  }
+
+  file { "$iocbase/phase1/st.cmd":
+    source	=> '/vagrant/files/pvmanager/pvmanager-integration/epics/phase1/st.cmd',
+    owner	=> 'root',
+    group	=> 'softioc',
+    mode	=> '0755',
+    notify	=> Epicssoftioc::Ioc['phase1'],
+  }
+
+  epicssoftioc::ioc { 'phase1':
+    bootdir	=> '',
+    consolePort	=> '4053',
+    enable	=> false,
+    require	=> File["$iocbase/phase1"],
+  }
+
+  file { '/usr/local/lib/iocapps/typeChange1':
+    source	=> '/vagrant/files/pvmanager/pvmanager-integration/epics/typeChange1',
+    recurse	=> true,
+    notify	=> Epicssoftioc::Ioc['typeChange1'],
+  }
+
+  file { "$iocbase/typeChange1/st.cmd":
+    source	=> '/vagrant/files/pvmanager/pvmanager-integration/epics/typeChange1/st.cmd',
+    owner	=> 'root',
+    group	=> 'softioc',
+    mode	=> '0755',
+    notify	=> Epicssoftioc::Ioc['typeChange1'],
+  }
+
+  epicssoftioc::ioc { 'typeChange1':
+    bootdir	=> '',
+    consolePort	=> '4053',
+    enable	=> false,
+    require	=> File["$iocbase/typeChange1"],
+  }
+
+  file { "$iocbase/typeChange2":
+    source	=> '/vagrant/files/pvmanager/pvmanager-integration/epics/typeChange2',
+    recurse	=> true,
+    notify	=> Epicssoftioc::Ioc['typeChange2'],
+  }
+
+  file { "$iocbase/typeChange2/st.cmd":
+    source	=> '/vagrant/files/pvmanager/pvmanager-integration/epics/typeChange2/st.cmd',
+    owner	=> 'root',
+    group	=> 'softioc',
+    mode	=> '0755',
+    notify	=> Epicssoftioc::Ioc['typeChange2'],
+  }
+
+  epicssoftioc::ioc { 'typeChange2':
+    bootdir	=> '',
+    consolePort	=> '4053',
+    enable	=> false,
+    require	=> File["$iocbase/typeChange2"],
+  }
 }
