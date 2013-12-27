@@ -14,25 +14,31 @@ $iocbase = '/usr/local/lib/iocapps'
 
 node "archappl0.example.com" {
   include vagrant
+
   class { 'archiver_appliance::node':
     nodes_fqdn	=> $archiver_nodes,
   }
+
   Class['vagrant'] -> Class['archiver_appliance::node']
 }
 
 node "archappl1.example.com" {
   include vagrant
+
   class { 'archiver_appliance::node':
     nodes_fqdn	=> $archiver_nodes,
   }
+
   Class['vagrant'] -> Class['archiver_appliance::node']
 }
 
 node "archappl2.example.com" {
   include vagrant
+
   class { 'archiver_appliance::node':
     nodes_fqdn	=> $archiver_nodes,
   }
+
   Class['vagrant'] -> Class['archiver_appliance::node']
 }
 
@@ -159,4 +165,45 @@ node "testioc.example.com" {
     enable	=> false,
     require	=> File["$iocbase/typeChange2"],
   }
+}
+
+node "archiveviewer.example.com" {
+  include vagrant
+  include apt
+
+  apt::source { 'nsls2repo':
+    location    => 'http://epics.nsls2.bnl.gov/debian/',
+    release     => 'wheezy',
+    repos       => 'main contrib',
+    include_src => false,
+    key         => '256355f9',
+    key_source  => 'http://epics.nsls2.bnl.gov/debian/repo-key.pub',
+  }
+
+  package { 'task-lxde-desktop':
+    ensure	=> installed,
+  }
+
+  package { 'openjdk-7-jdk':
+    ensure	=> installed,
+  }
+
+  exec { 'use openjdk 7 by default':
+    command	=> '/usr/sbin/update-java-alternatives -s java-1.7.0-openjdk-amd64',
+    require	=> Package['openjdk-7-jdk'],
+  }
+
+  package { 'epics-catools':
+    ensure	=> installed,
+    require	=> Apt::Source['nsls2repo'],
+  }
+
+  file { '/usr/local/lib/archiveviewer.jar':
+    ensure	=> file,
+    source	=> '/vagrant/files/archiveviewer.jar',
+  }
+
+  Class['vagrant'] -> Package['task-lxde-desktop']
+  Class['vagrant'] -> Package['openjdk-7-jdk']
+  Class['vagrant'] -> Class['apt']
 }

@@ -47,6 +47,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       tvb.customize ["modifyvm", :id, "--memory", "256"]
     end
   end
+  config.vm.define "archiveviewer" do |archiveviewer|
+    archiveviewer.vm.network :public_network, :mac => "0800273ea3ff"
+    archiveviewer.vm.hostname = "archiveviewer.example.com"
+    archiveviewer.vm.provider :virtualbox do |avvb|
+      avvb.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
 
   # If true, then any SSH connections made will enable agent forwarding.
   # Default value: false

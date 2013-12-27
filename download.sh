@@ -12,6 +12,9 @@ if [ ! -f mysql-connector-java-5.1.27.tar.gz ]; then
 fi
 popd
 pushd files
+if [ ! -f archiveviewer.jar ]; then
+  wget http://downloads.sourceforge.net/project/epicsarchiverap/snapshots/archiveviewer.jar
+fi
 if [ ! -d pvmanager ]; then
   hg clone http://hg.code.sf.net/p/pvmanager/pvmanager
 else
