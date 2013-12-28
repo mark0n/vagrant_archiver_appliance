@@ -10,39 +10,44 @@ $archiver_nodes = [
   'archappl2.example.com',
 ]
 
+$loadbalancer = 'loadbalancer.example.com'
+
 $iocbase = '/usr/local/lib/iocapps'
 
-node "archappl0.example.com" {
+node 'archappl0.example.com' {
   include vagrant
 
   class { 'archiver_appliance::node':
-    nodes_fqdn	=> $archiver_nodes,
+    nodes_fqdn		=> $archiver_nodes,
+    loadbalancer	=> $loadbalancer,
   }
 
   Class['vagrant'] -> Class['archiver_appliance::node']
 }
 
-node "archappl1.example.com" {
+node 'archappl1.example.com' {
   include vagrant
 
   class { 'archiver_appliance::node':
-    nodes_fqdn	=> $archiver_nodes,
+    nodes_fqdn		=> $archiver_nodes,
+    loadbalancer	=> $loadbalancer,
   }
 
   Class['vagrant'] -> Class['archiver_appliance::node']
 }
 
-node "archappl2.example.com" {
+node 'archappl2.example.com' {
   include vagrant
 
   class { 'archiver_appliance::node':
-    nodes_fqdn	=> $archiver_nodes,
+    nodes_fqdn		=> $archiver_nodes,
+    loadbalancer	=> $loadbalancer,
   }
 
   Class['vagrant'] -> Class['archiver_appliance::node']
 }
 
-node "testioc.example.com" {
+node 'testioc.example.com' {
   include vagrant
 
   apt::source { 'nsls2repo':
@@ -167,7 +172,7 @@ node "testioc.example.com" {
   }
 }
 
-node "archiveviewer.example.com" {
+node 'archiveviewer.example.com' {
   include vagrant
   include apt
 
@@ -206,4 +211,14 @@ node "archiveviewer.example.com" {
   Class['vagrant'] -> Package['task-lxde-desktop']
   Class['vagrant'] -> Package['openjdk-7-jdk']
   Class['vagrant'] -> Class['apt']
+}
+
+node 'loadbalancer.example.com' {
+  include vagrant
+
+  class { 'archiver_appliance::loadbalancer':
+    nodes_fqdn	=> $archiver_nodes,
+  }
+
+  Class['vagrant'] -> Class['archiver_appliance::loadbalancer']
 }

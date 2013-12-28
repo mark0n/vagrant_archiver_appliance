@@ -54,6 +54,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       avvb.customize ["modifyvm", :id, "--memory", "512"]
     end
   end
+  config.vm.define "loadbalancer" do |loadbalancer|
+    loadbalancer.vm.network :public_network, :mac => "0800273ea400"
+    loadbalancer.vm.hostname = "loadbalancer.example.com"
+    loadbalancer.vm.provider :virtualbox do |lbvb|
+      lbvb.customize ["modifyvm", :id, "--memory", "128"]
+    end
+  end
 
   # If true, then any SSH connections made will enable agent forwarding.
   # Default value: false
