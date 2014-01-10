@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=ArchiveViewer
+Exec=/usr/local/bin/archiveviewer.sh
+Terminal=true
+Type=Application
+Categories=Science;
+GenericName=ArchiveViewer
+Comment=SLAC's ArchiveViewer

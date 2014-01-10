@@ -208,6 +208,20 @@ node 'archiveviewer.example.com' {
     source	=> '/vagrant/files/archiveviewer.jar',
   }
 
+  file { '/usr/local/bin/archiveviewer.sh':
+    ensure	=> file,
+    source	=> '/vagrant/files/archiveviewer.sh',
+    owner	=> root,
+    mode	=> '0755',
+    require	=> File['/usr/local/lib/archiveviewer.jar'],
+  }
+
+  file { '/usr/share/applications/archiveviewer.desktop':
+    ensure	=> file,
+    source	=> '/vagrant/files/archiveviewer',
+    require	=> File['/usr/local/bin/archiveviewer.sh'],
+  }
+
   Class['vagrant'] -> Package['task-lxde-desktop']
   Class['vagrant'] -> Package['openjdk-7-jdk']
   Class['vagrant'] -> Class['apt']
