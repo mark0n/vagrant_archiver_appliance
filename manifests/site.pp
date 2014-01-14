@@ -170,6 +170,10 @@ node 'testioc.example.com' {
     enable	=> false,
     require	=> File["$iocbase/typeChange2"],
   }
+
+  Class['vagrant'] -> Class['apt']
+  Class['vagrant'] -> Class['epicssoftioc']
+  Apt::Source['nsls2repo'] -> Class['epicssoftioc']
 }
 
 node 'archiveviewer.example.com' {
