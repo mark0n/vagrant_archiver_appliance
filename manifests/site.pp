@@ -55,7 +55,7 @@ node 'testioc.example.com' {
     release     => 'wheezy',
     repos       => 'main contrib',
     include_src => false,
-    key         => '256355f9',
+    key         => 'BE16DA67',
     key_source  => 'http://epics.nsls2.bnl.gov/debian/repo-key.pub',
   }
 
