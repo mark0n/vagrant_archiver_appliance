@@ -14,12 +14,25 @@ $loadbalancer = 'loadbalancer.example.com'
 
 $iocbase = '/usr/local/lib/iocapps'
 
+$archappl_tarball_url = 'http://downloads.sourceforge.net/project/epicsarchiverap/snapshots/archappl_v0.0.1_SNAPSHOT_19-December-2013T10-26-34.tar.gz'
+$archappl_tarball_md5sum = '36d68a803d52bb3cbfb676a79c93799e'
+$mysqlconnector_tarball_url = 'http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.28.tar.gz'
+$mysqlconnector_tarball_md5sum = 'fe5289a1cf7ca0dee85979c86c602db3'
+$tomcatjdbc_tarball_url = 'http://people.apache.org/~fhanik/jdbc-pool/v1.1.0.1/apache-tomcat-jdbc-1.1.0.1-bin.tar.gz'
+$tomcatjdbc_tarball_md5sum = '588c6fd5de5157780b1091a82cfbdd2d'
+
 node 'archappl0.example.com' {
   include vagrant
 
   class { 'archiver_appliance::node':
     nodes_fqdn		=> $archiver_nodes,
     loadbalancer	=> $loadbalancer,
+    archappl_tarball_url	=> $archappl_tarball_url,
+    archappl_tarball_md5sum	=> $archappl_tarball_md5sum,
+    mysqlconnector_tarball_url	=> $mysqlconnector_tarball_url,
+    mysqlconnector_tarball_md5sum	=> $mysqlconnector_tarball_md5sum,
+    tomcatjdbc_tarball_url	=> $tomcatjdbc_tarball_url,
+    tomcatjdbc_tarball_md5sum	=> $tomcatjdbc_tarball_md5sum,
   }
 
   Class['vagrant'] -> Class['archiver_appliance::node']
@@ -31,6 +44,10 @@ node 'archappl1.example.com' {
   class { 'archiver_appliance::node':
     nodes_fqdn		=> $archiver_nodes,
     loadbalancer	=> $loadbalancer,
+    archappl_tarball_url	=> $archappl_tarball_url,
+    archappl_tarball_md5sum	=> $archappl_tarball_md5sum,
+    mysqlconnector_tarball_url	=> $mysqlconnector_tarball_url,
+    mysqlconnector_tarball_md5sum	=> $mysqlconnector_tarball_md5sum,
   }
 
   Class['vagrant'] -> Class['archiver_appliance::node']
