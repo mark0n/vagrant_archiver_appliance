@@ -5,3 +5,7 @@ modules/archiver_appliance/files/mysql-connector-java-5.1.27.tar.gz
 files/archiveviewer.jar
 files/pvmanager
 .vagrant
+modules
+.librarian
+.tmp
+Puppetfile.lock

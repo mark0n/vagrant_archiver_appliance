@@ -1,4 +1,6 @@
 #!/bin/bash
+librarian-puppet install
+
 pushd modules/archiver_appliance/files
 if [ ! -f apache-tomcat-jdbc-1.1.0.1-bin.tar.gz ]; then
   wget http://people.apache.org/~fhanik/jdbc-pool/v1.1.0.1/apache-tomcat-jdbc-1.1.0.1-bin.tar.gz

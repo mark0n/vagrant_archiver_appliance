@@ -1,3 +1,0 @@
-define apache::vhost::custom (
-) {
-}

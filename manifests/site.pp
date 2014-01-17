@@ -59,7 +59,7 @@ node 'testioc.example.com' {
     key_source  => 'http://epics.nsls2.bnl.gov/debian/repo-key.pub',
   }
 
-  class { 'epicssoftioc':
+  class { 'epics_softioc':
     iocbase	=> $iocbase,
   }
 
@@ -68,7 +68,7 @@ node 'testioc.example.com' {
     recurse	=> true,
     owner	=> 'root',
     group	=> 'softioc',
-    notify	=> Epicssoftioc::Ioc['control'],
+    notify	=> Epics_softioc::Ioc['control'],
   }
 
   file { "$iocbase/control/st.cmd":
@@ -76,10 +76,10 @@ node 'testioc.example.com' {
     owner	=> 'root',
     group	=> 'softioc',
     mode	=> '0755',
-    notify	=> Epicssoftioc::Ioc['control'],
+    notify	=> Epics_softioc::Ioc['control'],
   }
 
-  epicssoftioc::ioc { 'control':
+  epics_softioc::ioc { 'control':
     bootdir	=> '',
     consolePort	=> '4051',
     enable	=> true,
@@ -111,7 +111,7 @@ node 'testioc.example.com' {
     recurse	=> true,
     owner	=> 'root',
     group	=> 'softioc',
-    notify	=> Epicssoftioc::Ioc['phase1'],
+    notify	=> Epics_softioc::Ioc['phase1'],
   }
 
   file { "$iocbase/phase1/st.cmd":
@@ -119,10 +119,10 @@ node 'testioc.example.com' {
     owner	=> 'root',
     group	=> 'softioc',
     mode	=> '0755',
-    notify	=> Epicssoftioc::Ioc['phase1'],
+    notify	=> Epics_softioc::Ioc['phase1'],
   }
 
-  epicssoftioc::ioc { 'phase1':
+  epics_softioc::ioc { 'phase1':
     bootdir	=> '',
     consolePort	=> '4053',
     enable	=> false,
@@ -132,7 +132,7 @@ node 'testioc.example.com' {
   file { '/usr/local/lib/iocapps/typeChange1':
     source	=> '/vagrant/files/pvmanager/pvmanager-integration/epics/typeChange1',
     recurse	=> true,
-    notify	=> Epicssoftioc::Ioc['typeChange1'],
+    notify	=> Epics_softioc::Ioc['typeChange1'],
   }
 
   file { "$iocbase/typeChange1/st.cmd":
@@ -140,10 +140,10 @@ node 'testioc.example.com' {
     owner	=> 'root',
     group	=> 'softioc',
     mode	=> '0755',
-    notify	=> Epicssoftioc::Ioc['typeChange1'],
+    notify	=> Epics_softioc::Ioc['typeChange1'],
   }
 
-  epicssoftioc::ioc { 'typeChange1':
+  epics_softioc::ioc { 'typeChange1':
     bootdir	=> '',
     consolePort	=> '4053',
     enable	=> false,
@@ -153,7 +153,7 @@ node 'testioc.example.com' {
   file { "$iocbase/typeChange2":
     source	=> '/vagrant/files/pvmanager/pvmanager-integration/epics/typeChange2',
     recurse	=> true,
-    notify	=> Epicssoftioc::Ioc['typeChange2'],
+    notify	=> Epics_softioc::Ioc['typeChange2'],
   }
 
   file { "$iocbase/typeChange2/st.cmd":
@@ -161,10 +161,10 @@ node 'testioc.example.com' {
     owner	=> 'root',
     group	=> 'softioc',
     mode	=> '0755',
-    notify	=> Epicssoftioc::Ioc['typeChange2'],
+    notify	=> Epics_softioc::Ioc['typeChange2'],
   }
 
-  epicssoftioc::ioc { 'typeChange2':
+  epics_softioc::ioc { 'typeChange2':
     bootdir	=> '',
     consolePort	=> '4053',
     enable	=> false,
@@ -172,8 +172,8 @@ node 'testioc.example.com' {
   }
 
   Class['vagrant'] -> Class['apt']
-  Class['vagrant'] -> Class['epicssoftioc']
-  Apt::Source['nsls2repo'] -> Class['epicssoftioc']
+  Class['vagrant'] -> Class['epics_softioc']
+  Apt::Source['nsls2repo'] -> Class['epics_softioc']
 }
 
 node 'archiveviewer.example.com' {

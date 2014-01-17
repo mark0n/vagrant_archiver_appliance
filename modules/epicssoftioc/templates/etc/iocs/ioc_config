@@ -1,4 +1,0 @@
-NAME=<%= name %>
-PORT=<%= consolePort %>
-HOST=<%= fqdn %>
-CHDIR=<%= iocbase %>/<%= name %>
