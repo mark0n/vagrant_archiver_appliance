@@ -1,4 +1,6 @@
 class archiver_appliance($nodes_fqdn = undef, $loadbalancer) {
+  $archappl_tarball = 'archappl_v0.0.1_SNAPSHOT_19-December-2013T10-26-34.tar.gz'
+
   File { owner => root, group => root, mode => '0644' }
 
   package { 'openjdk-7-jdk':
@@ -61,16 +63,16 @@ class archiver_appliance($nodes_fqdn = undef, $loadbalancer) {
     content	=> template('archiver_appliance/appliances.xml'),
   }
 
-  file { '/tmp/archappl_v0.0.1_SNAPSHOT_09-January-2014T09-35-32.tar.gz':
+  file { "/tmp/$archappl_tarball":
     ensure	=> file,
-    source	=> 'puppet:///modules/archiver_appliance/archappl_v0.0.1_SNAPSHOT_09-January-2014T09-35-32.tar.gz',
+    source	=> "puppet:///modules/archiver_appliance/$archappl_tarball",
   }
 
   exec { 'extract archiver appliance archive':
-    command	=> '/bin/tar -xzf /tmp/archappl_v0.0.1_SNAPSHOT_09-January-2014T09-35-32.tar.gz',
+    command	=> "/bin/tar -xzf /tmp/$archappl_tarball",
     cwd		=> '/tmp/',
     creates	=> '/tmp/engine.war',
-    subscribe	=> File['/tmp/archappl_v0.0.1_SNAPSHOT_09-January-2014T09-35-32.tar.gz'],
+    subscribe	=> File["/tmp/$archappl_tarball"],
   }
 
   exec { 'deploy multiple tomcats':
