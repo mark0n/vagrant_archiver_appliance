@@ -207,9 +207,9 @@ node 'archiveviewer.example.com' {
     require	=> Apt::Source['nsls2repo'],
   }
 
-  file { '/usr/local/lib/archiveviewer.jar':
-    ensure	=> file,
-    source	=> '/vagrant/files/archiveviewer.jar',
+  wget::fetch { 'archiveviewer':
+    source	=> 'http://downloads.sourceforge.net/project/epicsarchiverap/snapshots/archiveviewer.jar',
+    destination	=> '/usr/local/lib/archiveviewer.jar',
   }
 
   file { '/usr/local/bin/archiveviewer.sh':
@@ -217,7 +217,7 @@ node 'archiveviewer.example.com' {
     source	=> '/vagrant/files/archiveviewer.sh',
     owner	=> root,
     mode	=> '0755',
-    require	=> File['/usr/local/lib/archiveviewer.jar'],
+    require	=> Wget::Fetch['archiveviewer'],
   }
 
   file { '/usr/share/applications/archiveviewer.desktop':

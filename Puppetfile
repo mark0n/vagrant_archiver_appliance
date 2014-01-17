@@ -5,3 +5,5 @@ mod 'archiver_appliance',
 
 mod 'epics_softioc',
   :git => 'https://konrad@stash.nscl.msu.edu/scm/deploy/puppet_module_epics_softioc.git'
+
+mod 'maestrodev/wget'
