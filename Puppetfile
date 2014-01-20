@@ -4,9 +4,9 @@ mod 'archive',
   :git => 'https://github.com/mark0n/puppet-archive.git'
 
 mod 'archiver_appliance',
-  :git => 'https://konrad@stash.nscl.msu.edu/scm/deploy/puppet_module_archiver_appliance.git'
+  :git => 'https://stash.nscl.msu.edu/scm/deploy/puppet_module_archiver_appliance.git'
 
 mod 'epics_softioc',
-  :git => 'https://konrad@stash.nscl.msu.edu/scm/deploy/puppet_module_epics_softioc.git'
+  :git => 'https://stash.nscl.msu.edu/scm/deploy/puppet_module_epics_softioc.git'
 
 mod 'maestrodev/wget'
