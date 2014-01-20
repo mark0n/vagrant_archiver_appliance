@@ -1,5 +1,8 @@
 forge "http://forge.puppetlabs.com"
 
+mod 'archive',
+  :git => 'https://github.com/mark0n/puppet-archive.git'
+
 mod 'archiver_appliance',
   :git => 'https://konrad@stash.nscl.msu.edu/scm/deploy/puppet_module_archiver_appliance.git'
 
