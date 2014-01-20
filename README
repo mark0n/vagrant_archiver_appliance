@@ -25,10 +25,34 @@ Software requirements:
   Puppet
   librarian-puppet
 
-Run the following commands to bring up the virtual machines:
+Getting started:
+  Run the following commands to bring up the virtual machines:
 
   > librarian-puppet install
   > vagrant up
+
+  As soon as the VMs are running you can go ahead and start the testioc:
+
+  > vagrant ssh testioc
+  (testioc)$ service softioc-phase1 start
+
+  Then you can use the browser from the archiverviewer VM and add some test PVs (http://archappl0:17665/mgmt/):
+
+  double-counter-1Hz
+  double-counter-100Hz
+
+  Archiving should start after a few minutes. Then you should be able to
+  retrieve data with SLAC's ArchiverViewer (use the shortcut in the "Others"
+  section of the application launcher). Create a new connection to the archiver
+  using
+
+  pbraw://archappl0:17668/retrieval
+
+  for direct access to one of the nodes or
+
+  pbraw://loadbalancer/retrieval
+
+  to use the load balancer.
 
 Contact:
   Author: Martin Konrad <konrad at frib.msu.edu>
