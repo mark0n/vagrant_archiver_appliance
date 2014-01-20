@@ -227,6 +227,12 @@ node 'archiveviewer.example.com' {
     source  => '/vagrant/files/archiveviewer',
     require => File['/usr/local/bin/archiveviewer.sh'],
   }
+
+  service { 'lightdm':
+    ensure  => running,
+    enable  => true,
+    require => Package['task-lxde-desktop'],
+  }
 }
 
 node 'loadbalancer.example.com' {
