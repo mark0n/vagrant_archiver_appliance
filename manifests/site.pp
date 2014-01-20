@@ -22,8 +22,6 @@ $tomcatjdbc_tarball_url = 'http://people.apache.org/~fhanik/jdbc-pool/v1.1.0.1/a
 $tomcatjdbc_tarball_md5sum = '588c6fd5de5157780b1091a82cfbdd2d'
 
 node 'archappl0.example.com' {
-  include vagrant
-
   class { 'archiver_appliance::node':
     nodes_fqdn                    => $archiver_nodes,
     loadbalancer                  => $loadbalancer,
@@ -34,13 +32,9 @@ node 'archappl0.example.com' {
     tomcatjdbc_tarball_url        => $tomcatjdbc_tarball_url,
     tomcatjdbc_tarball_md5sum     => $tomcatjdbc_tarball_md5sum,
   }
-
-  Class['vagrant'] -> Class['archiver_appliance::node']
 }
 
 node 'archappl1.example.com' {
-  include vagrant
-
   class { 'archiver_appliance::node':
     nodes_fqdn                    => $archiver_nodes,
     loadbalancer                  => $loadbalancer,
@@ -49,24 +43,16 @@ node 'archappl1.example.com' {
     mysqlconnector_tarball_url    => $mysqlconnector_tarball_url,
     mysqlconnector_tarball_md5sum => $mysqlconnector_tarball_md5sum,
   }
-
-  Class['vagrant'] -> Class['archiver_appliance::node']
 }
 
 node 'archappl2.example.com' {
-  include vagrant
-
   class { 'archiver_appliance::node':
     nodes_fqdn   => $archiver_nodes,
     loadbalancer => $loadbalancer,
   }
-
-  Class['vagrant'] -> Class['archiver_appliance::node']
 }
 
 node 'testioc.example.com' {
-  include vagrant
-
   apt::source { 'nsls2repo':
     location    => 'http://epics.nsls2.bnl.gov/debian/',
     release     => 'wheezy',
@@ -188,13 +174,10 @@ node 'testioc.example.com' {
     require     => File["${iocbase}/typeChange2"],
   }
 
-  Class['vagrant'] -> Class['apt']
-  Class['vagrant'] -> Class['epics_softioc']
   Apt::Source['nsls2repo'] -> Class['epics_softioc']
 }
 
 node 'archiveviewer.example.com' {
-  include vagrant
   include apt
 
   apt::source { 'nsls2repo':
@@ -242,18 +225,10 @@ node 'archiveviewer.example.com' {
     source  => '/vagrant/files/archiveviewer',
     require => File['/usr/local/bin/archiveviewer.sh'],
   }
-
-  Class['vagrant'] -> Package['task-lxde-desktop']
-  Class['vagrant'] -> Package['openjdk-7-jdk']
-  Class['vagrant'] -> Class['apt']
 }
 
 node 'loadbalancer.example.com' {
-  include vagrant
-
   class { 'archiver_appliance::loadbalancer':
     nodes_fqdn => $archiver_nodes,
   }
-
-  Class['vagrant'] -> Class['archiver_appliance::loadbalancer']
 }
