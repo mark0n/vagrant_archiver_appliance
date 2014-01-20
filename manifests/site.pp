@@ -42,6 +42,8 @@ node 'archappl1.example.com' {
     archappl_tarball_md5sum       => $archappl_tarball_md5sum,
     mysqlconnector_tarball_url    => $mysqlconnector_tarball_url,
     mysqlconnector_tarball_md5sum => $mysqlconnector_tarball_md5sum,
+    tomcatjdbc_tarball_url        => $tomcatjdbc_tarball_url,
+    tomcatjdbc_tarball_md5sum     => $tomcatjdbc_tarball_md5sum,
   }
 }
 
