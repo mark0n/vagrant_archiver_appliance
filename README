@@ -1,0 +1,32 @@
+  This repo provides some Vagrant/Puppet manifests that automatically install
+  and configure a test environment for the EPICS Archiver Appliance. The
+  environment consists of the following virtual machines:
+
+    archappl0        (first archiver node)
+    archappl1        (second archiver node)
+    testioc          (IOC providing some PVs to archive)
+    archiveviewer    (SLACs archive viewer application)
+    loadbalancer
+
+  Note that a third archiver node is configured but not brought up by default.
+  This allows to test the behavior with nodes that have failed or are down for
+  maintenance.
+
+  Use the shortcut in the start menu (category "others") to run the archive
+  viewer application.
+
+Software requirements:
+
+  Virtual Box
+  Vagrant
+  Git
+  Puppet
+  librarian-puppet
+
+Run the following commands to bring up the virtual machines:
+
+  > librarian-puppet install
+  > vagrant up
+
+Contact:
+  Author: Martin Konrad <konrad at frib.msu.edu>
