@@ -21,6 +21,36 @@ $mysqlconnector_tarball_md5sum = 'fe5289a1cf7ca0dee85979c86c602db3'
 $tomcatjdbc_tarball_url = 'http://people.apache.org/~fhanik/jdbc-pool/v1.1.0.1/apache-tomcat-jdbc-1.1.0.1-bin.tar.gz'
 $tomcatjdbc_tarball_md5sum = '588c6fd5de5157780b1091a82cfbdd2d'
 
+host { 'archappl0.example.com':
+  ip           => '192.168.1.2',
+  host_aliases => 'archappl0',
+}
+
+host { 'archappl1.example.com':
+  ip           => '192.168.1.3',
+  host_aliases => 'archappl1',
+}
+
+host { 'archappl2.example.com':
+  ip           => '192.168.1.4',
+  host_aliases => 'archappl2',
+}
+
+host { 'testioc.example.com':
+  ip           => '192.168.1.5',
+  host_aliases => 'testioc',
+}
+
+host { 'archiveviewer.example.com':
+  ip           => '192.168.1.6',
+  host_aliases => 'archiveviewer',
+}
+
+host { 'loadbalancer.example.com':
+  ip           => '192.168.1.7',
+  host_aliases => 'loadbalancer',
+}
+
 node 'archappl0.example.com' {
   class { 'archiver_appliance::node':
     nodes_fqdn                    => $archiver_nodes,
