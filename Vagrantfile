@@ -52,6 +52,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     archiveviewer.vm.hostname = "archiveviewer.example.com"
     archiveviewer.vm.provider :virtualbox do |avvb|
       avvb.customize ["modifyvm", :id, "--memory", "512"]
+      avvb.gui = true
     end
   end
   config.vm.define "loadbalancer" do |loadbalancer|
