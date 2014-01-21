@@ -98,20 +98,21 @@ node 'testioc.example.com' {
     iocbase => $iocbase,
   }
 
-  file { "${iocbase}/control":
-    source  => '/vagrant/files/pvmanager/pvmanager-integration/epics/control',
-    recurse => true,
-    owner   => 'root',
-    group   => 'softioc',
-    notify  => Epics_softioc::Ioc['control'],
+  class { 'incommon_ca_cert':
   }
 
-  file { "${iocbase}/control/st.cmd":
-    source => '/vagrant/files/pvmanager/pvmanager-integration/epics/control/st.cmd',
-    owner  => 'root',
-    group  => 'softioc',
-    mode   => '0755',
-    notify => Epics_softioc::Ioc['control'],
+  package { 'git':
+    ensure => installed,
+  }
+
+  vcsrepo { $iocbase:
+    ensure => present,
+    provider => git,
+    source => 'https://stash.nscl.msu.edu/scm/test/pv_manager_test_iocs.git',
+    require => [
+      Package['git'],
+      Class['incommon_ca_cert'],
+    ],
   }
 
   epics_softioc::ioc { 'control':
@@ -119,14 +120,8 @@ node 'testioc.example.com' {
     bootdir     => '',
     consolePort => '4051',
     enable      => true,
-    require     => File["${iocbase}/control"],
-  }
-
-  file { '/usr/local/bin':
-    source  => '/vagrant/files/pvmanager/pvmanager-integration/epics/bin',
-    recurse => true,
-    owner   => 'root',
-    group   => 'root',
+    require     => Vcsrepo[$iocbase],
+    subscribe   => Vcsrepo[$iocbase],
   }
 
   file { '/etc/init.d/testcontroller':
@@ -141,69 +136,28 @@ node 'testioc.example.com' {
     enable => true,
   }
 
-  file { "${iocbase}/phase1":
-    source  => '/vagrant/files/pvmanager/pvmanager-integration/epics/phase1',
-    recurse => true,
-    owner   => 'root',
-    group   => 'softioc',
-    notify  => Epics_softioc::Ioc['phase1'],
-  }
-
-  file { "${iocbase}/phase1/st.cmd":
-    source => '/vagrant/files/pvmanager/pvmanager-integration/epics/phase1/st.cmd',
-    owner  => 'root',
-    group  => 'softioc',
-    mode   => '0755',
-    notify => Epics_softioc::Ioc['phase1'],
-  }
-
   epics_softioc::ioc { 'phase1':
     bootdir     => '',
     consolePort => '4053',
     enable      => false,
-    require     => File["${iocbase}/phase1"],
-  }
-
-  file { '/usr/local/lib/iocapps/typeChange1':
-    source  => '/vagrant/files/pvmanager/pvmanager-integration/epics/typeChange1',
-    recurse => true,
-    notify  => Epics_softioc::Ioc['typeChange1'],
-  }
-
-  file { "${iocbase}/typeChange1/st.cmd":
-    source => '/vagrant/files/pvmanager/pvmanager-integration/epics/typeChange1/st.cmd',
-    owner  => 'root',
-    group  => 'softioc',
-    mode   => '0755',
-    notify => Epics_softioc::Ioc['typeChange1'],
+    require     => Vcsrepo[$iocbase],
+    subscribe   => Vcsrepo[$iocbase],
   }
 
   epics_softioc::ioc { 'typeChange1':
     bootdir     => '',
     consolePort => '4053',
     enable      => false,
-    require     => File["${iocbase}/typeChange1"],
-  }
-
-  file { "${iocbase}/typeChange2":
-    source  => '/vagrant/files/pvmanager/pvmanager-integration/epics/typeChange2',
-    recurse => true,
-    notify  => Epics_softioc::Ioc['typeChange2'],
-  }
-
-  file { "${iocbase}/typeChange2/st.cmd":
-    source => '/vagrant/files/pvmanager/pvmanager-integration/epics/typeChange2/st.cmd',
-    owner  => 'root',
-    group  => 'softioc',
-    mode   => '0755',
-    notify => Epics_softioc::Ioc['typeChange2'],
+    require     => Vcsrepo[$iocbase],
+    subscribe   => Vcsrepo[$iocbase],
   }
 
   epics_softioc::ioc { 'typeChange2':
     bootdir     => '',
     consolePort => '4053',
     enable      => false,
-    require     => File["${iocbase}/typeChange2"],
+    require     => Vcsrepo[$iocbase],
+    subscribe   => Vcsrepo[$iocbase],
   }
 
   Apt::Source['nsls2repo'] -> Class['epics_softioc']

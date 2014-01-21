@@ -22,6 +22,7 @@ PORT=4052
 COMMAND=./server-script.sh
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
+WORKDIR=/usr/local/lib/iocapps/bin
 
 # Exit if the package is not installed
 [ -x "$DAEMON" ] || exit 0
@@ -49,7 +50,7 @@ do_start()
 	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON --test > /dev/null \
 		|| return 1
 	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON -- \
-		-c /usr/local/bin/ -p $PIDFILE -n $NAME --restrict $PORT $COMMAND \
+		-c $WORKDIR -p $PIDFILE -n $NAME --restrict $PORT $COMMAND \
 		|| return 2
 	# Add code here, if necessary, that waits for the process to be ready
 	# to handle requests from services started subsequently which depend
