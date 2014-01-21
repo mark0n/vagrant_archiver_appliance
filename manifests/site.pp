@@ -106,10 +106,10 @@ node 'testioc.example.com' {
   }
 
   vcsrepo { $iocbase:
-    ensure => present,
+    ensure   => present,
     provider => git,
-    source => 'https://stash.nscl.msu.edu/scm/test/pv_manager_test_iocs.git',
-    require => [
+    source   => 'https://stash.nscl.msu.edu/scm/test/pv_manager_test_iocs.git',
+    require  => [
       Package['git'],
       Class['incommon_ca_cert'],
     ],
