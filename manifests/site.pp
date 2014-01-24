@@ -302,15 +302,19 @@ node 'testioc.example.com' {
   }
 
   file { '/etc/init.d/testcontroller':
-    source => '/vagrant/files/init.d/testcontroller',
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
+    source  => '/vagrant/files/init.d/testcontroller',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    require => Vcsrepo[$iocbase],
   }
 
   service { 'testcontroller':
-    ensure => running,
-    enable => true,
+    ensure     => running,
+    enable     => true,
+    hasstatus  => true,
+    hasrestart => true,
+    require    => File['/etc/init.d/testcontroller'],
   }
 
   epics_softioc::ioc { 'phase1':
