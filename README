@@ -34,7 +34,7 @@ Getting started:
   As soon as the VMs are running you can go ahead and start the testioc:
 
   > vagrant ssh testioc
-  (testioc)$ service softioc-phase1 start
+  (testioc)$ sudo service softioc-phase1 start
 
   Then you can use the browser from the archiverviewer VM and add some test PVs (http://archappl0:17665/mgmt/):
 
