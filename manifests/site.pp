@@ -14,8 +14,8 @@ $loadbalancer = 'loadbalancer.example.com'
 
 $iocbase = '/usr/local/lib/iocapps'
 
-$archappl_tarball_url = 'http://downloads.sourceforge.net/project/epicsarchiverap/snapshots/archappl_v0.0.1_SNAPSHOT_19-December-2013T10-26-34.tar.gz'
-$archappl_tarball_md5sum = '36d68a803d52bb3cbfb676a79c93799e'
+$archappl_tarball_url = 'http://downloads.sourceforge.net/project/epicsarchiverap/snapshots/archappl_v0.0.1_SNAPSHOT_05-February-2014T08-57-38.tar.gz'
+$archappl_tarball_md5sum = '0c582b1d8f8be7d193d586dc493f2f09'
 $tomcatjdbc_tarball_url = 'http://people.apache.org/~fhanik/jdbc-pool/v1.1.0.1/apache-tomcat-jdbc-1.1.0.1-bin.tar.gz'
 $tomcatjdbc_tarball_md5sum = '588c6fd5de5157780b1091a82cfbdd2d'
 

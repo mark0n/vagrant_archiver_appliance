@@ -30,14 +30,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # your network.
   config.vm.define "archappl0" do |archappl0|
     archappl0.vm.network :private_network, ip: "192.168.1.2", virtualbox__intnet: "archivernet"
+    archappl0.vm.network :forwarded_port, guest: 17668, host: 17668
     archappl0.vm.hostname = "archappl0.example.com"
   end
   config.vm.define "archappl1" do |archappl1|
     archappl1.vm.network :private_network, ip: "192.168.1.3", virtualbox__intnet: "archivernet"
+    archappl1.vm.network :forwarded_port, guest: 17668, host: 17678
     archappl1.vm.hostname = "archappl1.example.com"
   end
 #  config.vm.define "archappl2" do |archappl2|
 #    archappl2.vm.network :private_network, ip: "192.168.1.4", virtualbox__intnet: "archivernet"
+#    archappl1.vm.network :forwarded_port, guest: 17668, host: 17688
 #    archappl2.vm.hostname = "archappl2.example.com"
 #  end
   config.vm.define "testioc" do |testioc|
@@ -57,6 +60,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
   config.vm.define "loadbalancer" do |loadbalancer|
     loadbalancer.vm.network :private_network, ip: "192.168.1.7", virtualbox__intnet: "archivernet"
+    loadbalancer.vm.network :forwarded_port, guest: 80, host: 17698
     loadbalancer.vm.hostname = "loadbalancer.example.com"
     loadbalancer.vm.provider :virtualbox do |lbvb|
       lbvb.customize ["modifyvm", :id, "--memory", "128"]
