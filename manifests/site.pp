@@ -12,7 +12,8 @@ $archiver_nodes = [
 
 $loadbalancer = 'loadbalancer.example.com'
 
-$iocbase = '/usr/local/lib/iocapps'
+$vcsbase = '/usr/local/lib/iocapps'
+$iocbase = "${vcsbase}/v3-IOCs"
 
 $archappl_tarball_url = 'http://downloads.sourceforge.net/project/epicsarchiverap/snapshots/archappl_v0.0.1_SNAPSHOT_04-March-2014T09-29-05.tar.gz'
 $archappl_tarball_md5sum = 'b8ce038f104f71fa726e12e7643dbbcb'
@@ -151,21 +152,21 @@ node 'testioc.example.com' {
     iocbase => $iocbase,
   }
 
-  class { 'incommon_ca_cert':
-  }
-
   package { 'git':
     ensure => installed,
   }
 
-  vcsrepo { $iocbase:
+  vcsrepo { $vcsbase:
     ensure   => present,
     provider => git,
-    source   => 'https://stash.nscl.msu.edu/scm/test/pv_manager_test_iocs.git',
-    require  => [
-      Package['git'],
-      Class['incommon_ca_cert'],
-    ],
+    source   => 'https://github.com/diirt/flint.git',
+    require  => Package['git'],
+  }
+
+  file { "${iocbase}/control":
+    ensure  => link,
+    target  => "${vcsbase}/flint-controller/control",
+    require => Vcsrepo[$vcsbase],
   }
 
   epics_softioc::ioc { 'control':
@@ -173,8 +174,8 @@ node 'testioc.example.com' {
     bootdir     => '',
     consolePort => '4051',
     enable      => true,
-    require     => Vcsrepo[$iocbase],
-    subscribe   => Vcsrepo[$iocbase],
+    require     => File["${vcsbase}/v3-IOCs/control"],
+    subscribe   => Vcsrepo[$vcsbase],
   }
 
   file { '/etc/init.d/testcontroller':
@@ -182,7 +183,7 @@ node 'testioc.example.com' {
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
-    require => Vcsrepo[$iocbase],
+    require => Vcsrepo[$vcsbase],
   }
 
   service { 'testcontroller':
@@ -197,24 +198,24 @@ node 'testioc.example.com' {
     bootdir     => '',
     consolePort => '4053',
     enable      => false,
-    require     => Vcsrepo[$iocbase],
-    subscribe   => Vcsrepo[$iocbase],
+    require     => Vcsrepo[$vcsbase],
+    subscribe   => Vcsrepo[$vcsbase],
   }
 
   epics_softioc::ioc { 'typeChange1':
     bootdir     => '',
     consolePort => '4053',
     enable      => false,
-    require     => Vcsrepo[$iocbase],
-    subscribe   => Vcsrepo[$iocbase],
+    require     => Vcsrepo[$vcsbase],
+    subscribe   => Vcsrepo[$vcsbase],
   }
 
   epics_softioc::ioc { 'typeChange2':
     bootdir     => '',
     consolePort => '4053',
     enable      => false,
-    require     => Vcsrepo[$iocbase],
-    subscribe   => Vcsrepo[$iocbase],
+    require     => Vcsrepo[$vcsbase],
+    subscribe   => Vcsrepo[$vcsbase],
   }
 
   Apt::Source['nsls2repo'] -> Class['epics_softioc']
