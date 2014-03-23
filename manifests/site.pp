@@ -12,8 +12,8 @@ $archiver_nodes = [
 
 $loadbalancer = 'loadbalancer.example.com'
 
-$vcsbase = '/usr/local/lib/iocapps'
-$iocbase = "${vcsbase}/v3-IOCs"
+$vcsbase = '/usr/local/lib/flint'
+$iocbase = "${vcsbase}/flint-ca"
 
 $archappl_tarball_url = 'http://downloads.sourceforge.net/project/epicsarchiverap/snapshots/archappl_v0.0.1_SNAPSHOT_04-March-2014T09-29-05.tar.gz'
 $archappl_tarball_md5sum = 'b8ce038f104f71fa726e12e7643dbbcb'
@@ -174,7 +174,7 @@ node 'testioc.example.com' {
     bootdir     => '',
     consolePort => '4051',
     enable      => true,
-    require     => File["${vcsbase}/v3-IOCs/control"],
+    require     => File["${vcsbase}/flint-ca/control"],
     subscribe   => Vcsrepo[$vcsbase],
   }
 
