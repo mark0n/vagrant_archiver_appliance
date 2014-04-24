@@ -15,8 +15,8 @@ $loadbalancer = 'loadbalancer.example.com'
 $vcsbase = '/usr/local/lib/flint'
 $iocbase = "${vcsbase}/flint-ca"
 
-$archappl_tarball_url = 'http://downloads.sourceforge.net/project/epicsarchiverap/snapshots/archappl_v0.0.1_SNAPSHOT_04-March-2014T09-29-05.tar.gz'
-$archappl_tarball_md5sum = 'b8ce038f104f71fa726e12e7643dbbcb'
+$archappl_tarball_url = 'http://downloads.sourceforge.net/project/epicsarchiverap/snapshots/archappl_v0.0.1_SNAPSHOT_24-April-2014T11-41-42.tar.gz'
+$archappl_tarball_md5sum = 'cef801d71f43d1de61ec5fbba622e0b2'
 $tomcatjdbc_tarball_url = 'http://people.apache.org/~fhanik/jdbc-pool/v1.1.0.1/apache-tomcat-jdbc-1.1.0.1-bin.tar.gz'
 $tomcatjdbc_tarball_md5sum = '588c6fd5de5157780b1091a82cfbdd2d'
 
