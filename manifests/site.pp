@@ -86,7 +86,7 @@ node /archappl[0-9]+.example.com/ {
   }
 
   file { '/srv/sts':
-    ensure  => directory,
+    ensure => directory,
   }
 
   mount { '/srv/sts':
@@ -101,16 +101,16 @@ node /archappl[0-9]+.example.com/ {
   }
 
   class { 'archiver_appliance':
-    nodes_fqdn                    => $archiver_nodes,
-    loadbalancer                  => $loadbalancer,
-    archappl_tarball_url          => $archappl_tarball_url,
-    archappl_tarball_md5sum       => $archappl_tarball_md5sum,
-    tomcatjdbc_tarball_url        => $tomcatjdbc_tarball_url,
-    tomcatjdbc_tarball_md5sum     => $tomcatjdbc_tarball_md5sum,
-    short_term_storage            => '/srv/sts',
-    mid_term_storage              => '/srv/mts',
-    long_term_storage             => '/srv/lts',
-    require                       => Mount['/srv/sts'],
+    nodes_fqdn                => $archiver_nodes,
+    loadbalancer              => $loadbalancer,
+    archappl_tarball_url      => $archappl_tarball_url,
+    archappl_tarball_md5sum   => $archappl_tarball_md5sum,
+    tomcatjdbc_tarball_url    => $tomcatjdbc_tarball_url,
+    tomcatjdbc_tarball_md5sum => $tomcatjdbc_tarball_md5sum,
+    short_term_storage        => '/srv/sts',
+    mid_term_storage          => '/srv/mts',
+    long_term_storage         => '/srv/lts',
+    require                   => Mount['/srv/sts'],
   }
 
   apt::source { 'nsls2repo':
