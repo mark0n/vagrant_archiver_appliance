@@ -1,7 +1,3 @@
-import 'classes/*.pp'
-
-#include use_local_deb_mirror
-#include use_nscl_deb_mirror
 include apt
 
 $archiver_nodes = [
