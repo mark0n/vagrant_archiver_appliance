@@ -12,7 +12,4 @@ mod 'epics_softioc',
 
 mod 'maestrodev/wget'
 
-mod 'incommon_ca_cert',
-  :git => 'https://stash.nscl.msu.edu/scm/deploy/puppet_module_incommon_ca_cert.git'
-
 mod 'puppetlabs/vcsrepo'
