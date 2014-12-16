@@ -16,6 +16,8 @@ $archappl_tarball_md5sum = '66bf5f5cce74dc1617adfd650c82760b'
 $tomcatjdbc_tarball_url = 'http://people.apache.org/~fhanik/jdbc-pool/v1.1.0.1/apache-tomcat-jdbc-1.1.0.1-bin.tar.gz'
 $tomcatjdbc_tarball_md5sum = '588c6fd5de5157780b1091a82cfbdd2d'
 
+$mysql_password = 'archappl'
+
 host { 'archappl0.example.com':
   ip           => '192.168.1.2',
   host_aliases => 'archappl0',
@@ -103,6 +105,7 @@ node /archappl[0-9]+.example.com/ {
     archappl_tarball_md5sum   => $archappl_tarball_md5sum,
     tomcatjdbc_tarball_url    => $tomcatjdbc_tarball_url,
     tomcatjdbc_tarball_md5sum => $tomcatjdbc_tarball_md5sum,
+    mysql_password            => $mysql_password,
     short_term_storage        => '/srv/sts',
     mid_term_storage          => '/srv/mts',
     long_term_storage         => '/srv/lts',
