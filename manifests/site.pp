@@ -109,6 +109,7 @@ node /archappl[0-9]+.example.com/ {
     short_term_storage        => '/srv/sts',
     mid_term_storage          => '/srv/mts',
     long_term_storage         => '/srv/lts',
+    policies_file_source      => '/vagrant/files/etc/archappl/policies.py',
     require                   => Mount['/srv/sts'],
   }
 
