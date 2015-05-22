@@ -233,6 +233,13 @@ node 'archiveviewer.example.com' {
     key_source  => 'http://epics.nsls2.bnl.gov/debian/repo-key.pub',
   }
 
+  # Make sure the password for user vagrant is set to 'vagrant' (some base boxes
+  # don't do that).
+  user { 'vagrant':
+    ensure   => present,
+    password => '$6$U/uKoIOn$v0QEHMyvDxuR5G3IbRTsgRaE1gtkV.C8KmbRjzy3ENnZVBB7FzHl8xeqdIUf0L2NhnxirAlA7xFvu4ueGOTzx1',
+  }
+
   package { 'task-lxde-desktop':
     ensure => installed,
   }
