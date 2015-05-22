@@ -12,6 +12,6 @@ mod 'frib/epics_softioc',
 
 mod 'maestrodev/wget'
 
-mod 'puppetlabs/apt'
+mod 'puppetlabs/apt', '>=2.0.0'
 
 mod 'puppetlabs/vcsrepo'

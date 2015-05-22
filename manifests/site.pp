@@ -114,13 +114,16 @@ node /archappl[0-9]+.example.com/ {
   }
 
   apt::source { 'nsls2repo':
-    location    => 'http://epics.nsls2.bnl.gov/debian/',
-    release     => 'wheezy',
-    repos       => 'main contrib',
-    include_src => false,
-    key         => '256355f9',
-    key_source  => 'http://epics.nsls2.bnl.gov/debian/repo-key.pub',
+    location => 'http://epics.nsls2.bnl.gov/debian/',
+    release  => 'wheezy',
+    repos    => 'main contrib',
+    key      => {
+      'id'     => '97D2B6FC0D3BCB4ABC56679C11B01C94D1BE1726',
+      'source' => 'http://epics.nsls2.bnl.gov/debian/repo-key.pub',
+    },
   }
+
+  Class['apt'] -> Package <| |>
 
   # Packages in controls repo are not signed, yet! Thus we use NSLS-II repo for now.
   #apt::source { 'controlsrepo':
@@ -140,13 +143,16 @@ node /archappl[0-9]+.example.com/ {
 
 node 'testioc.example.com' {
   apt::source { 'nsls2repo':
-    location    => 'http://epics.nsls2.bnl.gov/debian/',
-    release     => 'wheezy',
-    repos       => 'main contrib',
-    include_src => false,
-    key         => 'BE16DA67',
-    key_source  => 'http://epics.nsls2.bnl.gov/debian/repo-key.pub',
+    location => 'http://epics.nsls2.bnl.gov/debian/',
+    release  => 'wheezy',
+    repos    => 'main contrib',
+    key      => {
+      'id'     => '97D2B6FC0D3BCB4ABC56679C11B01C94D1BE1726',
+      'source' => 'http://epics.nsls2.bnl.gov/debian/repo-key.pub',
+    },
   }
+
+  Class['apt'] -> Package <| |>
 
   package { 'git':
     ensure => installed,
@@ -226,13 +232,16 @@ node 'archiveviewer.example.com' {
   include apt
 
   apt::source { 'nsls2repo':
-    location    => 'http://epics.nsls2.bnl.gov/debian/',
-    release     => 'wheezy',
-    repos       => 'main contrib',
-    include_src => false,
-    key         => '256355f9',
-    key_source  => 'http://epics.nsls2.bnl.gov/debian/repo-key.pub',
+    location => 'http://epics.nsls2.bnl.gov/debian/',
+    release  => 'wheezy',
+    repos    => 'main contrib',
+    key      => {
+      'id'     => '97D2B6FC0D3BCB4ABC56679C11B01C94D1BE1726',
+      'source' => 'http://epics.nsls2.bnl.gov/debian/repo-key.pub',
+    },
   }
+
+  Class['apt'] -> Package <| |>
 
   # Make sure the password for user vagrant is set to 'vagrant' (some base boxes
   # don't do that).
