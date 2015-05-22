@@ -148,10 +148,6 @@ node 'testioc.example.com' {
     key_source  => 'http://epics.nsls2.bnl.gov/debian/repo-key.pub',
   }
 
-  class { 'epics_softioc':
-    iocbase => $iocbase,
-  }
-
   package { 'git':
     ensure => installed,
   }
@@ -161,6 +157,11 @@ node 'testioc.example.com' {
     provider => git,
     source   => 'https://github.com/diirt/flint.git',
     require  => Package['git'],
+  }
+
+  class { 'epics_softioc':
+    iocbase => $iocbase,
+    require => Vcsrepo[$vcsbase],
   }
 
   file { "${iocbase}/control":
