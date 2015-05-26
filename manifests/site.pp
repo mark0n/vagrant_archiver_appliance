@@ -18,6 +18,13 @@ $tomcatjdbc_tarball_md5sum = '588c6fd5de5157780b1091a82cfbdd2d'
 
 $mysql_password = 'archappl'
 
+# Ensure localhost is defined correctly (for some reason this is not the case
+# with Debian Wheezy and Puppet).
+host { 'localhost.localdomain':
+  ip           => '127.0.0.1',
+  host_aliases => 'localhost',
+}
+
 host { 'archappl0.example.com':
   ip           => '192.168.1.2',
   host_aliases => 'archappl0',
@@ -110,7 +117,10 @@ node /archappl[0-9]+.example.com/ {
     mid_term_storage          => '/srv/mts',
     long_term_storage         => '/srv/lts',
     policies_file_source      => '/vagrant/files/etc/archappl/policies.py',
-    require                   => Mount['/srv/sts'],
+    require                   => [
+      Host['localhost.localdomain'],
+      Mount['/srv/sts'],
+    ],
   }
 
   apt::source { 'nsls2repo':
