@@ -59,24 +59,7 @@ node /archappl[0-9]+.example.com/ {
   # RAM disk size should be 64 GB
   $desiredramdisksize = 64<<30
 
-  # convert memory size from a string to bytes
-  $mem = inline_template("<%
-    mem,unit = scope.lookupvar('::memorysize').split
-    mem = mem.to_f
-    # Normalize mem to KiB
-    case unit
-      when nil
-        mem *= (1<<0)
-      when 'kB'
-        mem *= (1<<10)
-      when 'MB'
-        mem *= (1<<20)
-      when 'GB'
-        mem *= (1<<30)
-      when 'TB'
-        mem *= (1<<40)
-    end
-  %><%= mem.to_i %>")
+  $mem = $facts[memory][system][available_bytes]
 
   # use a much smaller RAM disk of 100 MB if running in test invironment
   if 1.5 * $desiredramdisksize < $mem {
