@@ -112,10 +112,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #
   config.vm.provision "shell", inline: "apt-get update -qq"
   config.vm.provision :puppet do |puppet|
-    puppet.manifests_path = "manifests"
-    puppet.manifest_file  = "site.pp"
-    puppet.module_path = "modules"
-    puppet.options = "--verbose"
+    puppet.options = '--verbose'
+    puppet.environment = 'production'
+    puppet.environment_path = 'environments'
+    puppet.working_directory = '/tmp/vagrant-puppet/environments/production'
   end
 
   # Enable provisioning with chef solo, specifying a cookbooks path, roles

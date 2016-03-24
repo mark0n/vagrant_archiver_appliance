@@ -116,7 +116,7 @@ node /archappl[0-9]+.example.com/ {
     short_term_storage        => '/srv/sts',
     mid_term_storage          => '/srv/mts',
     long_term_storage         => '/srv/lts',
-    policies_file_source      => '/vagrant/files/etc/archappl/policies.py',
+    policies_file_source      => '/vagrant/environments/production/files/etc/archappl/policies.py',
     require                   => [
       Host['localhost.localdomain'],
       Mount['/srv/sts'],
@@ -196,7 +196,7 @@ node 'testioc.example.com' {
   }
 
   file { '/etc/init.d/testcontroller':
-    source  => '/vagrant/files/init.d/testcontroller',
+    source  => '/vagrant/environments/production/files/init.d/testcontroller',
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
@@ -285,7 +285,7 @@ node 'archiveviewer.example.com' {
 
   file { '/usr/local/bin/archiveviewer.sh':
     ensure  => file,
-    source  => '/vagrant/files/archiveviewer.sh',
+    source  => '/vagrant/environments/production/files/archiveviewer.sh',
     owner   => root,
     mode    => '0755',
     require => Wget::Fetch['archiveviewer'],
@@ -293,7 +293,7 @@ node 'archiveviewer.example.com' {
 
   file { '/usr/share/applications/archiveviewer.desktop':
     ensure  => file,
-    source  => '/vagrant/files/archiveviewer',
+    source  => '/vagrant/environments/production/files/archiveviewer',
     require => File['/usr/local/bin/archiveviewer.sh'],
   }
 
