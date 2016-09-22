@@ -107,13 +107,14 @@ node /archappl[0-9]+.example.com/ {
   }
 
   apt::source { 'nsls2repo':
-    location => 'http://epics.nsls2.bnl.gov/debian/',
-    release  => 'wheezy',
-    repos    => 'main contrib',
-    key      => {
+    location      => 'http://epics.nsls2.bnl.gov/debian/',
+    release       => 'wheezy',
+    repos         => 'main contrib',
+    key           => {
       'id'     => '97D2B6FC0D3BCB4ABC56679C11B01C94D1BE1726',
       'source' => 'http://epics.nsls2.bnl.gov/debian/repo-key.pub',
     },
+    notify_update => true,
   }
 
   Class['apt'] -> Package <| |>
@@ -136,16 +137,17 @@ node /archappl[0-9]+.example.com/ {
 
 node 'testioc.example.com' {
   apt::source { 'nsls2repo':
-    location => 'http://epics.nsls2.bnl.gov/debian/',
-    release  => 'wheezy',
-    repos    => 'main contrib',
-    key      => {
+    location      => 'http://epics.nsls2.bnl.gov/debian/',
+    release       => 'wheezy',
+    repos         => 'main contrib',
+    key           => {
       'id'     => '97D2B6FC0D3BCB4ABC56679C11B01C94D1BE1726',
       'source' => 'http://epics.nsls2.bnl.gov/debian/repo-key.pub',
     },
+    notify_update => true,
   }
 
-  Class['apt'] -> Package <| |>
+  Class['apt::update'] -> Package <| |>
 
   package { 'git':
     ensure => installed,
@@ -222,13 +224,14 @@ node 'archiveviewer.example.com' {
   include apt
 
   apt::source { 'nsls2repo':
-    location => 'http://epics.nsls2.bnl.gov/debian/',
-    release  => 'wheezy',
-    repos    => 'main contrib',
-    key      => {
+    location      => 'http://epics.nsls2.bnl.gov/debian/',
+    release       => 'wheezy',
+    repos         => 'main contrib',
+    key           => {
       'id'     => '97D2B6FC0D3BCB4ABC56679C11B01C94D1BE1726',
       'source' => 'http://epics.nsls2.bnl.gov/debian/repo-key.pub',
     },
+    notify_update => true,
   }
 
   Class['apt'] -> Package <| |>
