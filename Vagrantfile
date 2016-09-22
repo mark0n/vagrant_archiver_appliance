@@ -110,6 +110,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # #               Managed by Puppet.\n"
   # # }
   #
+  config.vm.provision "shell", inline: "apt-key del 4BD6EC30"
+  config.vm.provision "shell", inline: "wget -qO - https://apt.puppetlabs.com/pubkey.gpg | apt-key add -"
   config.vm.provision "shell", inline: "apt-get update -qq"
   config.vm.provision :puppet do |puppet|
     puppet.options = '--verbose'
