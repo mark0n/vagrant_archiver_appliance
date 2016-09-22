@@ -61,5 +61,11 @@ Getting started:
   before checking out the Git repositories. Otherwise Git will convert Unix
   line breaks (LF) to CR+LF. This will break init scripts etc.!
 
+Note on legacy versions:
+  Old versions of the Archiver Appliance using CAJ <1.1.16 are subject to a bug
+  that causes the Archiver Appliance not to connect to PVs. You might need to
+  set EPICS_CA_ADDR_LIST=127.0.0.1 in /etc/default/archappl-mgmt and
+  /etc/default/archappl-engine to work around this problem.
+
 Contact:
   Author: Martin Konrad <konrad at frib.msu.edu>
