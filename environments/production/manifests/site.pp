@@ -198,7 +198,6 @@ node 'testioc.example.com' {
     bootdir     => '',
     consolePort => '4053',
     enable      => false,
-    require     => Vcsrepo[$vcsbase],
     subscribe   => Vcsrepo[$vcsbase],
   }
 
@@ -206,7 +205,6 @@ node 'testioc.example.com' {
     bootdir     => '',
     consolePort => '4053',
     enable      => false,
-    require     => Vcsrepo[$vcsbase],
     subscribe   => Vcsrepo[$vcsbase],
   }
 
@@ -214,7 +212,6 @@ node 'testioc.example.com' {
     bootdir     => '',
     consolePort => '4053',
     enable      => false,
-    require     => Vcsrepo[$vcsbase],
     subscribe   => Vcsrepo[$vcsbase],
   }
 
