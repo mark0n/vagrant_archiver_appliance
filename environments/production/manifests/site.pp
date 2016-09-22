@@ -176,6 +176,7 @@ node 'testioc.example.com' {
     bootdir     => '',
     consolePort => '4051',
     enable      => true,
+    run_make    => false,
     require     => File["${vcsbase}/flint-ca/control"],
     subscribe   => Vcsrepo[$vcsbase],
   }
@@ -200,6 +201,7 @@ node 'testioc.example.com' {
     bootdir     => '',
     consolePort => '4053',
     enable      => false,
+    run_make    => false,
     subscribe   => Vcsrepo[$vcsbase],
   }
 
@@ -207,6 +209,7 @@ node 'testioc.example.com' {
     bootdir     => '',
     consolePort => '4053',
     enable      => false,
+    run_make    => false,
     subscribe   => Vcsrepo[$vcsbase],
   }
 
@@ -214,6 +217,7 @@ node 'testioc.example.com' {
     bootdir     => '',
     consolePort => '4053',
     enable      => false,
+    run_make    => false,
     subscribe   => Vcsrepo[$vcsbase],
   }
 
