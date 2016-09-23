@@ -28,7 +28,9 @@ Software requirements:
 Getting started:
   Run the following commands to bring up the virtual machines:
 
+  > cd environments/production/
   > librarian-puppet install
+  > cd ../../
   > vagrant up
 
   As soon as the VMs are running you can go ahead and start the testioc:
